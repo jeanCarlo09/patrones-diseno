@@ -8,7 +8,7 @@
  * * objeto de configuración.
  */
 
-import { COLORS } from '../helpers/colors.ts';
+import { COLORS } from "../../constants/colors.ts";
 
 class DatabaseConnection {
   private static instance: DatabaseConnection;
@@ -20,7 +20,7 @@ class DatabaseConnection {
   // Método estático para obtener la instancia única
   public static getInstance(): DatabaseConnection {
     // Completar: implementar el patrón Singleton
-    throw new Error('Method not implemented.');
+    throw new Error("Method not implemented.");
   }
 
   // Método para conectar a la base de datos
@@ -42,7 +42,7 @@ function main() {
   const db2 = DatabaseConnection.getInstance();
   db2.connect(); // Debería mostrar que ya existe una conexión activa
 
-  console.log('Son iguales:', db1 === db2); // Debería mostrar true
+  console.log("Son iguales:", db1 === db2); // Debería mostrar true
 
   db1.disconnect(); // Debería cerrar la conexión
 

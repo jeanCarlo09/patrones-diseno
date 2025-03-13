@@ -17,7 +17,7 @@ class Pokemon {
   attacks: string[];
 
   constructor(name: string, type: string, level: number, attacks: string[]) {
-    throw new Error('Method not implemented.');
+    throw new Error("Method not implemented.");
   }
 
   // Método para clonar el Pokémon
@@ -30,7 +30,7 @@ class Pokemon {
     console.log(
       `Nombre: ${this.name}\nTipo: ${this.type}\nNivel: ${
         this.level
-      }\nAtaques: ${this.attacks.join(', ')}`
+      }\nAtaques: ${this.attacks.join(", ")}`
     );
   }
 }
