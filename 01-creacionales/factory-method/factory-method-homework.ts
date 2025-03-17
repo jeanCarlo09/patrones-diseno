@@ -35,19 +35,27 @@ interface Report {
 // Implementar SalesReport e InventoryReport
 
 class SalesReport implements Report {
-  // TODO: implementar el método e imprimir en consola:
-  // 'Generando reporte de ventas...'
+  generate(): void {
+    console.log("Generating %csales report", COLORS.green);
+  }
 }
 
 class InventoryReport implements Report {
-  // TODO: implementar el método e imprimir en consola:
-  // 'Generando reporte de inventario...'
+  generate(): void {
+    console.log("Generating %cinventory report", COLORS.blue);
+  }
+}
+
+class SocialMediaReport implements Report {
+  generate(): void {
+    console.log("Generating %csocial media report", COLORS.purple);
+  }
 }
 
 // 3. Clase Base ReportFactory con el Método Factory
 
 abstract class ReportFactory {
-  abstract createReport(): Report;
+  protected abstract createReport(): Report;
 
   generateReport(): void {
     const report = this.createReport();
@@ -59,33 +67,46 @@ abstract class ReportFactory {
 
 class SalesReportFactory extends ReportFactory {
   createReport(): Report {
-    throw new Error("Method not implemented.");
+    return new SalesReport();
   }
 }
 
 class InventoryReportFactory extends ReportFactory {
   createReport(): Report {
-    throw new Error("Method not implemented.");
+    return new InventoryReport();
+  }
+}
+
+class SocialMediaReportFactory extends ReportFactory {
+  createReport(): Report {
+    return new SocialMediaReport();
   }
 }
 
 // 5. Código Cliente para Probar
 
-function main() {
+(() => {
   let reportFactory: ReportFactory;
 
-  const reportType = prompt(
-    "¿Qué tipo de reporte deseas? %c(sales/inventory)",
-    COLORS.red
-  );
+  type ReportType = "sales" | "inventory" | "media";
 
-  if (reportType === "sales") {
-    reportFactory = new SalesReportFactory();
-  } else {
-    reportFactory = new InventoryReportFactory();
+  const reportType = prompt(
+    "¿Qué tipo de reporte deseas? (sales/inventory/media)"
+  ) as ReportType;
+
+  const mapActions: Record<ReportType, () => ReportFactory> = {
+    sales: () => new SalesReportFactory(),
+    inventory: () => new InventoryReportFactory(),
+    media: () => new SocialMediaReportFactory(),
+  };
+
+  const action = mapActions[reportType];
+
+  if (action) {
+    reportFactory = action();
+    reportFactory.generateReport();
+    return;
   }
 
-  reportFactory.generateReport();
-}
-
-main();
+  console.log("%cInvalid report type", COLORS.red);
+})();
